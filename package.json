@@ -17,5 +17,8 @@
     "ms": "^3.0.0-canary.1",
     "node-opus": "^0.3.3",
     "opusscript": "^0.0.8"
+  },
+  "devDependencies": {
+    "node": "^16.9.1"
   }
 }
