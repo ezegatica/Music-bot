@@ -1,8 +1,9 @@
+require('dotenv').config();
 module.exports = {
     app: {
-        px: 'XXX',
-        token: 'XXX',
-        playing: 'by Zerio ❤️',
+        px: '!',
+        token: process.env.TOKEN,
+        playing: 'RIP Rythm ❤️',
     },
 
     opt: {
