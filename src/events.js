@@ -7,11 +7,11 @@ player.on('connectionError', (queue, error) => {
 });
 
 player.on('trackStart', (queue, track) => {
-    queue.metadata.send(`Reproduciendo ${track.title} en **${queue.connection.channel.name}** 🎧`);
+    queue.metadata.send(`Reproduciendo **${track.title}** en **${queue.connection.channel.name}** 🎧`);
 });
 
 player.on('trackAdd', (queue, track) => {
-    queue.metadata.send(`Tema ${track.title} añadido a la fila ✅`);
+    queue.metadata.send(`Tema **${track.title}** añadido a la fila ✅`);
 });
 
 player.on('botDisconnect', (queue) => {
