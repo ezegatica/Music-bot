@@ -2,14 +2,14 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: 'nowplaying',
-    aliases: ['np'],
+    aliases: ['np', 'temon'],
     utilisation: '{prefix}nowplaying',
     voiceChannel: true,
 
     execute(client, message) {
         const queue = player.getQueue(message.guild.id);
 
-        if (!queue || !queue.playing) return message.channel.send(`No music currently playing ${message.author}... try again ? ❌`);
+        if (!queue || !queue.playing) return message.channel.send(`No hay musica reproduciendose actualmente ${message.author}... intentá denuevo ? ❌`);
 
         const track = queue.current;
 
@@ -19,9 +19,9 @@ module.exports = {
         embed.setThumbnail(track.thumbnail);
         embed.setAuthor(track.title, client.user.displayAvatarURL({ size: 1024, dynamic: true }));
 
-        const methods = ['disabled', 'track', 'queue'];
+        const methods = ['deshabilitada', 'track', 'queue'];
 
-        embed.setDescription(`Volume **${queue.volume}**%\nDuration **${track.duration}**\nLoop mode **${methods[queue.repeatMode]}**\nRequested by ${track.requestedBy}`);
+        embed.setDescription(`Volumen **${queue.volume}**%\nDuracion **${track.duration}**\nRepetición **${methods[queue.repeatMode]}**\nSolicitado por ${track.requestedBy}`);
 
         embed.setTimestamp();
         embed.setFooter('Music comes first - Made with heart by Zerio ❤️', message.author.avatarURL({ dynamic: true }));

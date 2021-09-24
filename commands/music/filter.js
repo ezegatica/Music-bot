@@ -7,11 +7,11 @@ module.exports = {
     async execute(client, message, args) {
         const queue = player.getQueue(message.guild.id);
 
-        if (!queue || !queue.playing) return message.channel.send(`No music currently playing ${message.author}... try again ? ❌`);
+        if (!queue || !queue.playing) return message.channel.send(`No hay musica reproduciendose actualmente ${message.author}... intentá denuevo ? ❌`);
 
         const actualFilter = queue.getFiltersEnabled()[0];
 
-        if (!args[0]) return message.channel.send(`Please specify a valid filter to enable or disable ${message.author}... try again ? ❌\n${actualFilter ? `Filter currently active ${actualFilter} (${client.config.app.px}filter ${actualFilter} to disable it).\n` : ''}`);
+        if (!args[0]) return message.channel.send(`Por favor especifique un filtro valido a deshabilitar o habilitar ${message.author}... intentá denuevo ? ❌\n${actualFilter ? `Filtro actualmente activo: ${actualFilter} (**${client.config.app.px}filter ${actualFilter}** para deshabilitarlo).\n` : ''}`);
 
         const filters = [];
 
@@ -20,7 +20,7 @@ module.exports = {
 
         const filter = filters.find((x) => x.toLowerCase() === args[0].toLowerCase());
 
-        if (!filter) return message.channel.send(`This filter doesn't exist ${message.author}... try again ? ❌\n${actualFilter ? `Filter currently active ${actualFilter}.\n` : ''}List of available filters ${filters.map(x => `**${x}**`).join(', ')}.`);
+        if (!filter) return message.channel.send(`Este filtro no existe ${message.author}... intentá denuevo ? ❌\n${actualFilter ? `Filtro actualmente activo ${actualFilter}.\n` : ''}Lista de filtros disponibles: ${filters.map(x => `**${x}**`).join(', ')}.`);
 
         const filtersUpdated = {};
 
@@ -28,6 +28,6 @@ module.exports = {
 
         await queue.setFilters(filtersUpdated);
 
-        message.channel.send(`The filter ${filter} is now **${queue.getFiltersEnabled().includes(filter) ? 'enabled' : 'disabled'}** ✅\n*Reminder the longer the music is, the longer this will take.*`);
+        message.channel.send(`El filtro ${filter} ha sido **${queue.getFiltersEnabled().includes(filter) ? 'activado' : 'desactivado'}** ✅`);
     },
 };
