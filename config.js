@@ -3,7 +3,7 @@ module.exports = {
     app: {
         px: '!',
         token: process.env.TOKEN,
-        playing: 'RIP Rythm ❤️',
+        playing: '!play',
     },
 
     opt: {
