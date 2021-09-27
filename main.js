@@ -2,30 +2,46 @@ const { Player } = require('discord-player');
 const { Client, Intents } = require('discord.js');
 const express = require('express');
 const app = express();
-app.listen(80);
+const cluster = require('cluster');
 
-app.get("/ping", function (req, res){
-  return res.json("pong!");
-});
+if (cluster.isMaster) {
+    console.info("Cantidad de cores: " + require('os').cpus().length);
+    console.log(`Server corriendo en el puerto ${app.get('port')}`)
+    console.log(`Maestro ${process.pid} corriendo!`);
+    for (let i = 0; i < require('os').cpus().length; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', (worker) => {
+        console.error(`Worker ${worker.process.pid} fucking died :(`);
+        cluster.fork();
+    });
+} else {
+    console.log(`Worker ${cluster.worker.process.pid} levantado`);
+    app.listen(80);
 
-app.all('*', function (req, res) {
-    res.redirect("https://discord.com/api/oauth2/authorize?client_id=702882808422727761&permissions=3206224&scope=bot")
-});
-global.client = new Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_VOICE_STATES
-    ],
-    disableMentions: 'everyone',
-});
+    app.get("/ping", function (req, res) {
+        return res.json("pong!");
+    });
 
-client.config = require('./config');
+    app.all('*', function (req, res) {
+        res.redirect("https://discord.com/api/oauth2/authorize?client_id=702882808422727761&permissions=3206224&scope=bot")
+    });
+    global.client = new Client({
+        intents: [
+            Intents.FLAGS.GUILDS,
+            Intents.FLAGS.GUILD_MEMBERS,
+            Intents.FLAGS.GUILD_MESSAGES,
+            Intents.FLAGS.GUILD_VOICE_STATES
+        ],
+        disableMentions: 'everyone',
+    });
 
-global.player = new Player(client, client.config.opt.discordPlayer);
+    client.config = require('./config');
 
-require('./src/loader');
-require('./src/events');
+    global.player = new Player(client, client.config.opt.discordPlayer);
 
-client.login(client.config.app.token);
+    require('./src/loader');
+    require('./src/events');
+
+    client.login(client.config.app.token);
+}
