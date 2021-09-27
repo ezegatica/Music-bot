@@ -20,6 +20,6 @@
     "opusscript": "^0.0.8"
   },
   "devDependencies": {
-    "node": "^16.9.1"
+    "node": "^16.10.0"
   }
 }
