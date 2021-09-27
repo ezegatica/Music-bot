@@ -6,9 +6,9 @@ const cluster = require('cluster');
 
 if (cluster.isMaster) {
     console.info("Cantidad de cores: " + require('os').cpus().length);
-    console.log(`Server corriendo en el puerto ${app.get('port')}`)
+    // console.log(`Server corriendo en el puerto ${app.get('port')}`)
     console.log(`Maestro ${process.pid} corriendo!`);
-    for (let i = 0; i < require('os').cpus().length; i++) {
+    for (let i = 0; i < 1; i++) {
         cluster.fork();
     }
     cluster.on('exit', (worker) => {
