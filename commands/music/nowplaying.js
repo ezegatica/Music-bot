@@ -21,10 +21,12 @@ module.exports = {
 
         const methods = ['deshabilitada', 'track', 'queue'];
 
-        embed.setDescription(`Volumen **${queue.volume}**%\nDuracion **${track.duration}**\nRepetición **${methods[queue.repeatMode]}**\nSolicitado por ${track.requestedBy}`);
+        const progress = queue.createProgressBar();
 
+        embed.setDescription(`Progreso **${progress}**\nRepetición **${methods[queue.repeatMode]}**\nVolumen **${queue.volume}**%\nSolicitado por ${track.requestedBy}`);
+        
         embed.setTimestamp();
-        embed.setFooter('Music comes first - Made with heart by Zerio ❤️', message.author.avatarURL({ dynamic: true }));
+        embed.setFooter('Made with heart by Zerio, traducito por Gati ❤️', message.author.avatarURL({ dynamic: true }));
 
         message.channel.send({ embeds: [embed] });
     },
